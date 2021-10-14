@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="button.css">
+    <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-    <button id="changeColor"></button>
-    <script src="popup.js"></script>
+    <div style="width:200px">
+        <h1>The <b>DOM</b>inator</h1>
+        <div>
+            <h2>Enable Periodic Zapping</h2>
+            <label class="switch">
+                <input type="checkbox" id="enableToggle">
+                <span class="toggle round"></span>
+            </label>
+        </div>
+        <div>
+            <h2>Frequency of Zapping</h2>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="50" class="slider" id="freqRange">
+            </div>
+            <p id="freqOutput" class="slideoutput">50</p>
+        </div>
+        <button type="button" class="blockbutton" id="zapButton">Zap an Element!</button> 
+        <script src="popup.js"></script>
+    </div>
   </body>
 </html>
