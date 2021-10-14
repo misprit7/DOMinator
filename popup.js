@@ -1,27 +1,3 @@
-// // Initialize button with user's preferred color
-// let changeColor = document.getElementById("changeColor");
-
-// chrome.storage.sync.get("color", ({ color }) => {
-//   changeColor.style.backgroundColor = color;
-// });
-
-// // When the button is clicked, inject setPageBackgroundColor into current page
-// changeColor.addEventListener("click", async () => {
-//   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-//   chrome.scripting.executeScript({
-//     target: { tabId: tab.id },
-//     function: setPageBackgroundColor,
-//   });
-// });
-
-// // The body of this function will be executed as a content script inside the
-// // current page
-// function setPageBackgroundColor() {
-//   chrome.storage.sync.get("color", ({ color }) => {
-//     document.body.style.backgroundColor = color;
-//   });
-// }
 
 var enableToggle = document.getElementById("enableToggle")
 var slider = document.getElementById("freqRange");
@@ -41,9 +17,13 @@ console.log(chrome.storage.sync.get("zap_rate"))
 enableToggle.onchange = function() {
   // freqOutput.innerHTML = this.checked;
   chrome.storage.sync.set({"enabled": this.checked})
+  if(this.checked){
+    setInterval(function() {
+        zapRandom()
+    }, slider.value);
+  }
 }
 
-// Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
   freqOutput.innerHTML = this.value;
   chrome.storage.sync.set({"zap_rate": this.value})
