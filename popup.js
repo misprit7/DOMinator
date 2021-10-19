@@ -31,11 +31,6 @@ enableToggle.onchange = function() {
   }
 }
 
-async function startRandom(){
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  zapRandomRepeated(tab, slider.value)
-}
-
 slider.oninput = function() {
   freqOutput.innerHTML = this.value;
   chrome.storage.sync.set({"zap_rate": parseInt(this.value)})
