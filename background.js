@@ -4,7 +4,6 @@ let zap_rate = 50
 let enabled = false
 
 console.log("Background script loaded")
-zapInterval = setInterval(()=>{}, 1000)
 
 
 chrome.runtime.onInstalled.addListener(() => {
