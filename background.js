@@ -29,11 +29,16 @@ function zapRandomInternal(){
 zap_fun = async function() {
   let queryOptions = { active: true };
   let [tab] = await chrome.tabs.query(queryOptions);
-  console.log(tab)
-  if(!tab.url.includes("chrome://")){
-    console.log(tab)
-    zapRandom(tab)
-  }
+  chrome.storage.sync.get("enabled", ({enabled}) => {
+    console.log(enabled)
+    if(enabled && !tab.url.includes("chrome://")){
+      console.log(tab)
+      try{
+        zapRandom(tab)
+      }
+      catch (err){}
+    }
+  })
   chrome.storage.sync.get("zap_rate", ({zap_rate})=>{
     setTimeout(zap_fun, zap_rate)
   })

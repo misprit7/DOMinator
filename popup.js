@@ -26,9 +26,6 @@ console.log(chrome.storage.sync.get("zap_rate"))
 enableToggle.onchange = function() {
   // freqOutput.innerHTML = this.checked;
   chrome.storage.sync.set({"enabled": this.checked})
-  if(this.checked){
-    startRandom()
-  }
 }
 
 slider.oninput = function() {
