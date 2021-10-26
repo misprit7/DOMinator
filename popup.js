@@ -5,7 +5,6 @@ var slider = document.getElementById("freqRange");
 var freqOutput = document.getElementById("freqOutput");
 var zapButton = document.getElementById("zapButton")
 
-var freq = 50
 
 
 // Shouldn't copy paste but cannot for the life of me figure out how to share these
@@ -18,22 +17,20 @@ async function zapRandom(tab) {
 
 function zapRandomInternal(){
     let elems = document.body.getElementsByTagName("*");
+    if(elems.length == 0) return
     elem = elems[Math.floor(Math.random()*elems.length)]
-    elem.style.display = "none"
+    // elem.style.display = "none"
+    elem.remove()
 }
 
 
 chrome.storage.sync.get("enabled", ({enabled}) => {
   enableToggle.checked = enabled
-  if (enabled){
-    startRandom()
-  }
 })
 
 chrome.storage.sync.get("zap_rate", ({zap_rate}) => {
-  slider.value = zap_rate
-  freqOutput.innerHTML = zap_rate
-  freq = zap_rate
+  slider.value = 1000 / zap_rate
+  freqOutput.innerHTML = 1000 / zap_rate + " Zaps/sec"
 })
 console.log(chrome.storage.sync.get("zap_rate"))
 
@@ -45,14 +42,17 @@ enableToggle.onchange = function() {
 }
 
 // Zap rate slider
-slider.oninput = function() {
-  freqOutput.innerHTML = this.value;
-  chrome.storage.sync.set({"zap_rate": parseInt(this.value)})
+slider.onchange = function() {
+  freqOutput.innerHTML = this.value + " Zaps/sec";
+  console.log("set")
+  chrome.storage.sync.set({"zap_rate": 1000 / parseInt(this.value)})
 } 
 
 //Zap once
 zapButton.onclick = async function() {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  zapRandom(tab)
+  if(!tab.url.includes("chrome://")){
+    zapRandom(tab)
+  }
 }
 
