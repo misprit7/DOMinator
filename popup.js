@@ -51,7 +51,7 @@ slider.onchange = function() {
 //Zap once
 zapButton.onclick = async function() {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if(!tab.url.includes("chrome://")){
+  if(!tab.url.includes("chrome://") && !tab.url.includes("chrome.google.com")){
     zapRandom(tab)
   }
 }

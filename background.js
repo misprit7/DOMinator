@@ -31,7 +31,7 @@ zap_fun = async function() {
   let queryOptions = { active: true };
   let [tab] = await chrome.tabs.query(queryOptions);
   chrome.storage.sync.get("enabled", ({enabled}) => {
-    if(enabled && !tab.url.includes("chrome://")){
+    if(enabled && !tab.url.includes("chrome://") && !tab.url.includes("chrome.google.com")){
       try{
         zapRandom(tab)
       }
